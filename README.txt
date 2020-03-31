@@ -58,3 +58,19 @@ axios: dựa trên promise
 
 
 useEffect : khi component render ra thì nó sẽ chạy zo useEffect
+
+react-router-dom:
+Link/NavLink
+Route
+exact
+truyền params trên url
+switch
+định nghĩa vùng route
+
+synctax:
+{product&&JSON.stringify(product)}
+=
+if product
+  JSON.stringify(product)
+else
+  ;

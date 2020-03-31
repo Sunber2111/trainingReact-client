@@ -1,13 +1,37 @@
-import { observable, decorate, action } from "mobx";
+import { observable, decorate, action, runInAction, configure } from "mobx";
 import { createContext } from "react";
-
+import callAPI from "../api/agent";
 //store
 class NavBarStore {
+  
   count = 1;
-
+  products =[]; 
+  product = null;
   plusCount = () => {
-    this.count += 1;
+    runInAction(()=>{
+      this.count += 1;
+    })
   };
+
+  fetchData = async () =>{
+    try {
+      const products = await callAPI('product');
+      
+      this.products = products.data;
+      
+    } catch (error) {
+      throw error
+    }
+  }
+
+  fetchDataProduct = async id =>{
+    try {
+      const product = await callAPI(`product/${id}`);
+      this.product = product.data;
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 // định kiểu lại
@@ -15,7 +39,11 @@ class NavBarStore {
 // action: function
 decorate(NavBarStore, {
   count: observable,
-  plusCount: action
+  products:observable,
+  product:observable,
+  plusCount: action,
+  fetchData:action
 });
+
 
 export default createContext(new NavBarStore());

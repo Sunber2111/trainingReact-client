@@ -3,6 +3,7 @@ import { Menu, Label, Button } from "semantic-ui-react";
 import navbarStore from "../../app/store/navbarStore";
 import { observer } from "mobx-react-lite";
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 const Navbar = ({ listName, rate }) => {
   // const arr = props.listName;
@@ -29,14 +30,8 @@ const Navbar = ({ listName, rate }) => {
 
   // console.log(count);
 
-  const { count, plusCount } = useContext(navbarStore);
+  const { count, plusCount, fetchData } = useContext(navbarStore);
 
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/product')
-        .then(res=>{
-          console.log(res);
-        })
-  })
 
   const createMenu = () => {
     const arr = [];
@@ -55,9 +50,17 @@ const Navbar = ({ listName, rate }) => {
       <Button
         basic
         color="red"
-        content="Red"
         content="Click me"
         onClick={handleClick}
+      />
+      <Link to='/products'>products</Link>
+      <Button
+        as={Link}
+        to='/products'
+        basic
+        color="teal"
+        content="Fetch Data"
+        onClick={fetchData}
       />
       <Label as="a" image>
         {count}
